@@ -1,6 +1,6 @@
 # EcoIA — ExpoSaber
 
-Versão inicial gratuita, feita com HTML, CSS e JavaScript, sem frameworks.
+
 
 ## O que funciona
 - Acesso à câmera pelo navegador (quando suportado e publicado em HTTPS).
