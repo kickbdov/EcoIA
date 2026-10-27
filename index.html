@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#176b45">
+<meta name="description" content="EcoIA — educação ambiental e identificação consciente de resíduos.">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<title>EcoIA | ExpoSaber</title>
+<style>
+:root{--green:#176b45;--deep:#104b32;--mint:#e7f5ec;--cream:#fbfdf9;--ink:#18352a;--muted:#60746a;--line:#dce9df;--white:#fff}
+*{box-sizing:border-box}body{margin:0;background:var(--cream);color:var(--ink);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+header{background:linear-gradient(135deg,var(--deep),#258653);color:white;padding:24px 18px 28px;border-radius:0 0 28px 28px}
+.wrap{max-width:760px;margin:auto}.brand{display:flex;align-items:center;gap:12px}.logo{width:48px;height:48px;background:#ffffff20;border:1px solid #ffffff55;border-radius:16px;display:grid;place-items:center;font-size:27px}
+h1{font-size:1.45rem;margin:0}header p{margin:7px 0 0;color:#e4f5e9;line-height:1.45}
+main{padding:18px;max-width:760px;margin:auto}.card{background:white;border:1px solid var(--line);border-radius:20px;padding:18px;margin-bottom:15px;box-shadow:0 5px 20px #174c2b08}
+h2{font-size:1.08rem;margin:0 0 8px}p{line-height:1.5}.muted{color:var(--muted);font-size:.93rem}.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+button,.button{font:inherit;font-weight:650;border:0;border-radius:14px;padding:13px 14px;cursor:pointer;text-align:center;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:8px}
+.primary{background:var(--green);color:white}.secondary{background:var(--mint);color:var(--deep);border:1px solid #cbe5d3}.plain{background:white;color:var(--green);border:1px solid var(--line)}button:disabled{opacity:.45;cursor:not-allowed}
+#cameraArea{display:none;margin-top:14px}video,img.preview{width:100%;max-height:360px;object-fit:contain;background:#12251a;border-radius:15px}img.preview{background:#f2f7f3}#previewArea{display:none;margin-top:14px}#status{margin-top:12px;padding:12px;border-radius:12px;background:#f0f7f1;color:#315844;font-size:.92rem}
+.notice{background:#fff7e7;border:1px solid #f0dfb6;color:#654d18;padding:13px;border-radius:14px;font-size:.92rem}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.mini{background:#f5faf6;border:1px solid var(--line);border-radius:14px;padding:13px}.mini strong{display:block;margin-bottom:5px}.mini span{font-size:.9rem;color:var(--muted)}
+footer{text-align:center;padding:8px 18px 28px;color:var(--muted);font-size:.85rem}
+@media(max-width:420px){.actions{grid-template-columns:1fr}.grid{grid-template-columns:1fr 1fr}main{padding:13px}.card{padding:15px}}
+</style>
+</head>
+<body>
+<header><div class="wrap"><div class="brand"><div class="logo" aria-hidden="true">♻️</div><div><h1>EcoIA <span style="font-weight:400">| ExpoSaber</span></h1><p>Pequenas escolhas, um planeta melhor.</p></div></div></div></header>
+<main>
+<section class="card">
+<h2>Identifique um resíduo</h2>
+<p class="muted">Tire uma foto ou escolha uma imagem para começar. A análise automática por IA será ativada quando o serviço de IA estiver configurado.</p>
+<div class="actions">
+<button class="primary" id="openCamera">📷 Abrir câmera</button>
+<button class="secondary" id="choosePhoto">🖼️ Escolher foto</button>
+</div>
+<input id="galleryInput" type="file" accept="image/*" hidden>
+<input id="cameraInput" type="file" accept="image/*" capture="environment" hidden>
+<div id="cameraArea">
+<video id="video" autoplay playsinline muted></video>
+<div class="actions"><button class="primary" id="capture">Capturar foto</button><button class="plain" id="closeCamera">Fechar câmera</button></div>
+</div>
+<div id="previewArea">
+<img id="preview" class="preview" alt="Prévia do resíduo selecionado">
+<div class="actions"><button class="secondary" id="changePhoto">Trocar foto</button><button class="primary" id="analyze">Analisar resíduo</button></div>
+</div>
+<div id="status" role="status" aria-live="polite">Pronto para começar. A câmera pode pedir permissão.</div>
+</section>
+<section class="card">
+<h2>Como descartar melhor?</h2>
+<p class="muted">Orientações gerais. As regras podem variar conforme a coleta seletiva da sua cidade.</p>
+<div class="grid">
+<div class="mini"><strong>🟦 Papel e papelão</strong><span>Mantenha secos e sem excesso de gordura.</span></div>
+<div class="mini"><strong>🟨 Plásticos e metais</strong><span>Esvazie e, se possível, enxágue embalagens.</span></div>
+<div class="mini"><strong>🟩 Vidro</strong><span>Separe com cuidado; vidro quebrado precisa ser embalado com segurança.</span></div>
+<div class="mini"><strong>⬛ Rejeitos</strong><span>Itens sujos ou sem reciclagem local podem precisar ir ao lixo comum.</span></div>
+</div>
+</section>
+<section class="card">
+<h2>Por que reciclar?</h2>
+<p>Separar corretamente os resíduos ajuda a reduzir o desperdício de materiais e facilita o trabalho da coleta seletiva. Quando houver dúvida, consulte a orientação do serviço de limpeza urbana local.</p>
+</section>
+<section class="notice"><strong>Sobre a identificação por IA:</strong> esta versão já permite abrir a câmera ou escolher uma foto. Ela não inventa resultados: a análise automática só ficará ativa depois que um serviço de IA real for conectado com segurança.</section>
+</main>
+<footer>EcoIA — projeto educativo da ExpoSaber ♻️</footer>
+<script>
+const $=id=>document.getElementById(id);
+let stream=null, selectedFile=null, objectUrl=null;
+function status(msg){$('status').textContent=msg}
+function showPreview(file){
+ if(!file || !file.type.startsWith('image/')){status('Selecione um arquivo de imagem válido.');return}
+ selectedFile=file;
+ if(objectUrl)URL.revokeObjectURL(objectUrl);
+ objectUrl=URL.createObjectURL(file);
+ $('preview').src=objectUrl;
+ $('previewArea').style.display='block';
+ status('Foto carregada. A análise por IA ainda precisa ser configurada.');
+ stopCamera();
+}
+function stopCamera(){
+ if(stream){stream.getTracks().forEach(t=>t.stop());stream=null}
+ $('video').srcObject=null;$('cameraArea').style.display='none';
+}
+$('openCamera').addEventListener('click',async()=>{
+ stopCamera();
+ if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){
+   status('Este navegador não liberou a câmera direta. Vamos abrir a câmera do aparelho.');
+   $('cameraInput').click();return;
+ }
+ try{
+   stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'}},audio:false});
+   $('video').srcObject=stream;$('cameraArea').style.display='block';$('previewArea').style.display='none';
+   status('Câmera aberta. Enquadre o resíduo e toque em Capturar foto.');
+ }catch(e){
+   status('Não foi possível abrir a câmera ('+(e.name==='NotAllowedError'?'permissão negada':e.name==='NotFoundError'?'câmera não encontrada':'erro do navegador')+'). Tentando abrir a câmera do aparelho.');
+   $('cameraInput').click();
+ }
+});
+$('capture').addEventListener('click',()=>{
+ const v=$('video');
+ if(!v.videoWidth){status('A câmera ainda está carregando. Aguarde um instante.');return}
+ const c=document.createElement('canvas');c.width=v.videoWidth;c.height=v.videoHeight;
+ c.getContext('2d').drawImage(v,0,0);
+ c.toBlob(blob=>{if(blob)showPreview(new File([blob],'ecoia-foto.jpg',{type:'image/jpeg'}));else status('Não foi possível capturar a imagem. Tente novamente.');},'image/jpeg',.88);
+});
+$('closeCamera').addEventListener('click',()=>{stopCamera();status('Câmera fechada.')});
+$('choosePhoto').addEventListener('click',()=>$('galleryInput').click());
+$('changePhoto').addEventListener('click',()=>$('galleryInput').click());
+$('galleryInput').addEventListener('change',e=>{if(e.target.files[0])showPreview(e.target.files[0]);e.target.value=''});
+$('cameraInput').addEventListener('change',e=>{if(e.target.files[0])showPreview(e.target.files[0]);e.target.value=''});
+$('analyze').addEventListener('click',()=>status('A análise automática ainda não está conectada. A foto foi carregada corretamente; o próximo passo é configurar uma IA real sem expor chaves secretas.'));
+document.addEventListener('visibilitychange',()=>{if(document.hidden)stopCamera()});
+if('serviceWorker' in navigator && location.protocol.startsWith('http')){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}))}
+</script>
+</body></html>

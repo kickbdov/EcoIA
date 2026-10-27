@@ -1,0 +1,13 @@
+{
+  "name": "EcoIA - ExpoSaber",
+  "short_name": "EcoIA",
+  "description": "Educação ambiental e identificação consciente de resíduos.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#fbfdf9",
+  "theme_color": "#176b45",
+  "icons": [
+    {"src":"icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}
+  ]
+}
