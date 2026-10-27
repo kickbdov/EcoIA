@@ -374,7 +374,59 @@ $('cameraInput').addEventListener('change', event => {
   event.target.value = '';
 });
 
+
 $('analyze').addEventListener('click', async () => {
+  if (!selectedFile) {
+    status('Escolha uma foto primeiro.');
+    return;
+  }
+
+  const button = $('analyze');
+  button.disabled = true;
+  status('Analisando resíduo com a IA...');
+
+  try {
+    const imageBase64 = await new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const result = String(reader.result);
+        resolve(result.split(',')[1]);
+      };
+      reader.onerror = () => reject(new Error('Não foi possível ler a foto.'));
+      reader.readAsDataURL(selectedFile);
+    });
+
+    const response = await fetch(
+      'https://ecoia.yarakfcarvalho.workers.dev/',
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          imageBase64,
+          mimeType: selectedFile.type || 'image/jpeg'
+        })
+      }
+    );
+
+    const data = await response.json();
+
+    if (!response.ok || !data.sucesso) {
+      throw new Error(data.erro || data.detalhe || 'Erro ao analisar a foto.');
+    }
+
+    const a = data.analise;
+    $('result').textContent = a.objeto || 'Objeto identificado';
+    $('classification').textContent = a.classificacao || 'Classificação não informada';
+    $('guidance').textContent = a.orientacao || '';
+    $('curiosity').textContent = a.curiosidade || '';
+    status('Análise concluída!');
+  } catch (error) {
+    status('Não foi possível analisar: ' + error.message);
+  } finally {
+    button.disabled = false;
+  }
+});
+
   if (!selectedFile) {
     status('Escolha uma foto primeiro.');
     return;
